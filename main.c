@@ -1,25 +1,24 @@
 # include "minishell.h"
 
-int main() {
-    char *s;
-    char *p;
+int	main(int ac, char **av, char **env)
+{
+	char	*s;
+	int		i;
 
-    while (1)
-    {
-        s = readline("bash: ");
-        if (ft_strchr(s, '"'))
-        {
-            p = ft_strchr(s, '"') + 1;
-                while (!ft_strchr(p, '"'))
-                {
-                    s = ft_strjoin(s, "\n");
-                    s = ft_strjoin(s, readline("quote> "));
-                    // s = readline("quote> ");
-                    p = ft_strchr(s, '"') + 1;
-                }
-        }
-        printf("%s: command not found\n", s);
-        free (s);
-    }
-    return 0;
+	i = 0;
+	while (1)
+	{
+		s = readline("bash: ");
+		add_history(s);
+		ft_exit(s);
+        s = ft_check_env(s, env);
+		if (parsing(s, env) == true)
+		{
+			printf("%s\n", s);
+			free (s);
+		}
+        else
+            free (s);
+	}
+	return (0);
 }

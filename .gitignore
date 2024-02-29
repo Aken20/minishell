@@ -10,3 +10,4 @@
 # Libraries
 *.a
 *.lib
+test.c
